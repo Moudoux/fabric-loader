@@ -13,7 +13,7 @@ plugins {
 	id 'java-library'
 	id 'eclipse'
 	id 'maven-publish'
-	id 'checkstyle'
+	// id 'checkstyle'
 	id 'com.diffplug.spotless' version "6.22.0"
 	id 'fabric-loom' version '1.4-SNAPSHOT' apply false
 	id 'com.github.johnrengelman.shadow' version '8.1.1'
@@ -29,7 +29,7 @@ def ENV = System.getenv()
 allprojects {
 	apply plugin: 'java-library'
 	apply plugin: 'eclipse'
-	apply plugin: 'checkstyle'
+	// apply plugin: 'checkstyle'
 	apply plugin: "com.diffplug.spotless"
 
 	def constantsSource = rootProject.file("src/main/java/net/fabricmc/loader/impl/FabricLoaderImpl.java").text
@@ -316,10 +316,10 @@ task javadocJar(type: Jar) {
 build.dependsOn javadocJar
 
 allprojects {
-	checkstyle {
+	/* checkstyle {
 		configFile = project.rootProject.file("checkstyle.xml")
 		toolVersion = '8.44'
-	}
+	} */
 
 	spotless {
 		java {

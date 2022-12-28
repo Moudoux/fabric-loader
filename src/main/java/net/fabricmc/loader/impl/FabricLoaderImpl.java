@@ -69,7 +69,7 @@ import net.fabricmc.loader.impl.util.log.Log;
 import net.fabricmc.loader.impl.util.log.LogCategory;
 
 @SuppressWarnings("deprecation")
-public final class FabricLoaderImpl extends net.fabricmc.loader.FabricLoader {
+public class FabricLoaderImpl extends net.fabricmc.loader.FabricLoader {
 	public static final FabricLoaderImpl INSTANCE = InitHelper.get();
 
 	public static final int ASM_VERSION = Opcodes.ASM9;
@@ -101,7 +101,7 @@ public final class FabricLoaderImpl extends net.fabricmc.loader.FabricLoader {
 	private Path gameDir;
 	private Path configDir;
 
-	private FabricLoaderImpl() { }
+	public FabricLoaderImpl() { }
 
 	/**
 	 * Freeze the FabricLoader, preventing additional mods from being loaded.
@@ -199,6 +199,10 @@ public final class FabricLoaderImpl extends net.fabricmc.loader.FabricLoader {
 		}
 	}
 
+	public Path getInternalModsDirectory() {
+        return gameDir.resolve("mods");
+    }
+
 	private void setup() throws ModResolutionException {
 		boolean remapRegularMods = isDevelopmentEnvironment();
 		VersionOverrides versionOverrides = new VersionOverrides();
@@ -208,7 +212,7 @@ public final class FabricLoaderImpl extends net.fabricmc.loader.FabricLoader {
 
 		ModDiscoverer discoverer = new ModDiscoverer(versionOverrides, depOverrides);
 		discoverer.addCandidateFinder(new ClasspathModCandidateFinder());
-		discoverer.addCandidateFinder(new DirectoryModCandidateFinder(getModsDirectory0(), remapRegularMods));
+		discoverer.addCandidateFinder(new DirectoryModCandidateFinder(getInternalModsDirectory(), remapRegularMods));
 		discoverer.addCandidateFinder(new ArgumentModCandidateFinder(remapRegularMods));
 
 		Map<String, Set<ModCandidate>> envDisabledMods = new HashMap<>();
